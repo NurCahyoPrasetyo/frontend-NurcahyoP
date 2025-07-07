@@ -13,6 +13,8 @@ const DropDown: React.FC<DropDownProps> = ({ option, title, onChange }) => {
     id: 0,
     value: "",
     title: "",
+    diskon: 0,
+    harga: 0,
   });
 
   useEffect(() => {

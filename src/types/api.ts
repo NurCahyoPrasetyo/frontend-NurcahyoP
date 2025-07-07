@@ -23,6 +23,8 @@ export type Option = {
   id: number | string;
   value: string;
   title: string;
+  harga?: number;
+  diskon?: number;
 };
 
 export type OptionItem = {
