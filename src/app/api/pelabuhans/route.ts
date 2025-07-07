@@ -1,0 +1,38 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// src/app/api/pelabuhans/route.ts
+import { NextRequest, NextResponse } from "next/server";
+
+const API_BASE = process.env.NEXT_PUBLIC_API_PROXY;
+
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const id_negara = searchParams.get("id_negara");
+
+  if (!API_BASE) {
+    return NextResponse.json(
+      { error: "API_BASE not defined" },
+      { status: 500 }
+    );
+  }
+
+  if (!id_negara) {
+    return NextResponse.json(
+      { error: "Missing id_negara parameter" },
+      { status: 400 }
+    );
+  }
+
+  try {
+    const res = await fetch(`${API_BASE}/pelabuhans?id_negara=${id_negara}`);
+    const text = await res.text();
+
+    const data = JSON.parse(text);
+    return NextResponse.json(data);
+  } catch (err: any) {
+    console.error("❌ Failed to fetch pelabuhans:", err.message || err);
+    return NextResponse.json(
+      { error: "Failed to fetch pelabuhans" },
+      { status: 500 }
+    );
+  }
+}
